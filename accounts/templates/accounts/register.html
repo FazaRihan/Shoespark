@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+.register-page {
+    min-height: 100vh;
+    background-image: url("{% static 'images/gambar8.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    position: relative;
+}
+
+.register-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+    135deg,
+    rgba(10, 15, 30, 0.55) 0%,
+    rgba(10, 15, 30, 0.25) 50%,
+    rgba(10, 15, 30, 0.55) 100%
+    );
+    backdrop-filter: blur(0px);
+}
+
+.register-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    padding: 48px 44px 40px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+ 
+  .register-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.1rem;
+    letter-spacing: 0.12em;
+    color: #0d0d0d;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+ 
+  .register-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 32px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+ 
+  .register-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #9ca3af;
+    margin-bottom: 6px;
+    display: block;
+  }
+ 
+  .register-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #d1d5db;
+    border-radius: 0;
+    padding: 10px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #111827;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.22s ease;
+    box-shadow: none !important;
+  }
+ 
+  .register-input::placeholder {
+    color: #c4c9d4;
+    font-weight: 300;
+  }
+ 
+  .register-input:focus {
+    border-bottom-color: #2b57f5;
+    background: transparent;
+    box-shadow: none;
+  }
+ 
+  .form-field {
+    margin-bottom: 24px;
+  }
+ 
+  .form-row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+ 
+  .register-btn {
+    width: 100%;
+    padding: 15px;
+    background: #2b57f5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 18px rgba(43, 87, 245, 0.35);
+  }
+ 
+  .register-btn:hover {
+    background: #1a44e0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(43, 87, 245, 0.45);
+  }
+ 
+  .register-btn:active {
+    transform: translateY(0);
+  }
+ 
+  .register-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: #6b7280;
+    font-weight: 300;
+  }
+ 
+  .register-footer a {
+    color: #2b57f5;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.18s ease;
+  }
+ 
+  .register-footer a:hover {
+    border-bottom-color: #2b57f5;
+  }
+ 
+  .error-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: #ef4444;
+    margin-top: 4px;
+    display: block;
+  }
+ 
+  /* Override base navbar/footer interference */
+  .section-content {
+    padding: 0 !important;
+  }
+ 
+  /* Alerts styling */
+  .register-alerts {
+    margin-bottom: 20px;
+  }
+ 
+  @media (max-width: 500px) {
+    .register-card {
+      padding: 36px 24px 32px;
+    }
+    .form-row-split {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+        <div class="register-page">
+  <div class="register-card">
+ 
+    <div class="register-brand">Shoespark</div>
+    <p class="register-subtitle">Create your premium account.</p>
+ 
+    <div class="register-alerts">
+      {% include 'includes/alerts.html' %}
+    </div>
+ 
+    <form action="{% url 'register' %}" method="POST" novalidate>
+      {% csrf_token %}
+ 
+      <!-- First & Last Name -->
+      <div class="form-row-split">
+        <div class="form-field">
+          <label class="register-label" for="id_first_name">First Name</label>
+          {{ form.first_name }}
+          {% if form.first_name.errors %}
+            <span class="error-text">{{ form.first_name.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+        <div class="form-field">
+          <label class="register-label" for="id_last_name">Last Name</label>
+          {{ form.last_name }}
+          {% if form.last_name.errors %}
+            <span class="error-text">{{ form.last_name.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+      </div>
+ 
+      <!-- Email & Phone -->
+      <div class="form-row-split">
+        <div class="form-field">
+          <label class="register-label" for="id_email">Email Address</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <span class="error-text">{{ form.email.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+        <div class="form-field">
+          <label class="register-label" for="id_phone_number">Phone Number</label>
+          {{ form.phone_number }}
+          {% if form.phone_number.errors %}
+            <span class="error-text">{{ form.phone_number.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+      </div>
+ 
+      <!-- Password & Confirm -->
+      <div class="form-row-split">
+        <div class="form-field">
+          <label class="register-label" for="id_password">Password</label>
+          {{ form.password }}
+          {% if form.password.errors %}
+            <span class="error-text">{{ form.password.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+        <div class="form-field">
+          <label class="register-label" for="id_confirm_password">Confirm Password</label>
+          {{ form.confirm_password }}
+          {% if form.confirm_password.errors %}
+            <span class="error-text">{{ form.confirm_password.errors|join:", " }}</span>
+          {% endif %}
+        </div>
+      </div>
+ 
+      {% if form.non_field_errors %}
+        <span class="error-text" style="display:block; margin-bottom:12px;">
+          {{ form.non_field_errors|join:", " }}
+        </span>
+      {% endif %}
+ 
+      <button type="submit" class="register-btn">Create Account</button>
+    </form>
+ 
+    <p class="register-footer">
+      Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </p>
+ 
+  </div>
+</div>
+ 
+<script>
+  // Apply register-input class to all form inputs dynamically
+  document.querySelectorAll('.register-card input').forEach(function(el) {
+    el.classList.add('register-input');
+    el.removeAttribute('class');
+    el.className = 'register-input';
+  });
+</script>
+
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+    
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}

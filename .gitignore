@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+db.sqlite3
+
+# Environment
+.env
+env/
+venv/
+.venv/
+
+# VS Code
+.vscode/
+
+# Map files
+*.map

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-hero text-white"
+	style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'images/logo1.jpg' %}') no-repeat center center; background-size: cover; min-height: 1000px; width: 100%;">
+	<div class="container py-5">
+        <div class="row pt-5 pb-5">
+            <div class="col-md-7 col-lg-8">
+                
+                <h1 class="display-3 font-weight-bold mb-4">Step into performance</h1>
+                <p class="lead mb-5">Premium footwear engineered for athletes, adventurers, and everyday champions.</p>
+                
+                <div class="hero-btns mt-4">
+                    <a href="{% url 'store' %}" class="btn btn-primary btn-lg rounded-pill px-5 mr-3">Shop now &rarr;</a>
+                    <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5">Our story</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+	<div class="container">
+
+		<header class="section-heading">
+			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
+			<h3 class="section-title">Popular products</h3>
+		</header><!-- sect-heading -->
+
+
+		<div class="row">
+			{% for product in products %}
+			<div class="col-md-3">
+				<div class="card card-product-grid">
+					<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}"> </a>
+					<figcaption class="info-wrap">
+						<a href="{{ product.get_url }}" class="title">{{ product.name }}</a>
+						<div class="price mt-1">$ {{ product.price }}</div> <!-- price-wrap.// -->
+					</figcaption>
+				</div>
+			</div> <!-- col.// -->
+			{% endfor %}
+		</div> <!-- row.// -->
+
+	</div><!-- container // -->
+</section>
+<!-- ========================= SECTION  END// ========================= -->
+
+{% endblock %}

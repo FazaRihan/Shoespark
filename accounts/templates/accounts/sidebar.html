@@ -1,0 +1,12 @@
+<aside class="col-md-3">
+            <ul class="list-group">
+                <a class="list-group-item {% if request.path == '/accounts/dashboard/' %}active{% endif %}" href="{% url 'dashboard' %}"> My order history </a>
+                <a class="list-group-item {% if 'transactions' in request.path %}active{% endif %}" href="{% url 'transactions' %}"> Transactions </a>
+                <a class="list-group-item {% if 'returns' in request.path %}active{% endif %}" href="{% url 'returns' %}"> Return and refunds </a>
+                <a class="list-group-item {% if 'settings' in request.path %}active{% endif %}" href="{% url 'settings' %}"> Settings </a>
+                <a class="list-group-item {% if 'my_selling_items' in request.path %}active{% endif %}" href="{% url 'my_selling_items' %}"> My Selling Items </a>
+                <a class="list-group-item {% if 'received_orders' in request.path %}active{% endif %}" href="{% url 'received_orders' %}"> Received orders </a>
+            </ul>
+            <br>
+            <a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+        </aside>

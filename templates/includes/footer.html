@@ -1,0 +1,73 @@
+{% load static %}
+<!-- ========================== FOOTER ========================== -->
+<footer class="section-footer border-top" style="background-color: #000000; padding: 40px 0 0 0;">
+    <div class="container">
+        <div class="row">
+
+            <!-- Kolom 1: Logo + Deskripsi -->
+            <div class="col-md-3 mb-4">
+                <a href="{% url 'index' %}" class="nav-logo d-flex align-items-center mb-3" style="text-decoration:none;">
+                    <div class="logo-box">S</div>
+                    <span class="logo-text ms-2">Shoespark</span>
+                </a>
+                <p class="text-muted" style="font-size: 14px;">
+                    Your destination for premium footwear. Quality shoes for every step of your journey.
+                </p>
+            </div>
+
+            <!-- Kolom 2: Shop -->
+            <div class="col-md-2 mb-4 offset-md-1">
+                <h6 class="fw-bold mb-3">Shop</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'store' %}" class="text-muted text-decoration-none footer-link">All Products</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Running Shoes</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Casual Sneakers</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Hiking Boots</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Company -->
+            <div class="col-md-3 mb-4">
+                <h6 class="fw-bold mb-3">Company</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'about' %}" class="text-muted text-decoration-none footer-link">About Shoespark</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Shipping Info</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Returns Policy</a></li>
+                    <li><a href="#" class="text-muted text-decoration-none footer-link">Size Guide</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 4: Newsletter -->
+            <div class="col-md-3 mb-4">
+                <h6 class="fw-bold mb-3">Newsletter</h6>
+                <p class="text-muted" style="font-size: 14px;">Get updates on new arrivals and exclusive offers.</p>
+                <div class="input-group mb-2">
+                    <input type="email" class="form-control" placeholder="Your email" style="border-radius: 4px 0 0 4px;">
+                </div>
+                <button class="btn w-100 text-white fw-bold" style="background-color: #2ecc9a;">Subscribe</button>
+            </div>
+
+        </div>
+
+        <!-- Garis bawah + Copyright -->
+        <hr>
+        <div class="row pb-3">
+            <div class="col-md-6">
+                <p class="text-muted" style="font-size: 13px;">© 2026 Shoespark. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted text-decoration-none me-3" style="font-size: 13px;">Privacy Policy</a>
+                <a href="#" class="text-muted text-decoration-none" style="font-size: 13px;">Terms of Service</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<!-- CSS tambahan untuk hover link -->
+<style>
+    .footer-link:hover {
+        color: #2ecc9a !important;
+    }
+</style>
+<!-- ========================== FOOTER END ========================== -->

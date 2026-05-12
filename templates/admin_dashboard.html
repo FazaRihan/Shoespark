@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ShoesPark</title>
+    
+    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+</head>
+<body style="background-color: #f4f7fe; font-family: 'Inter', sans-serif;">
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>ShoesPark Admin</h2>
+            <ul>
+                <li>Dashboard</li>
+                <li>Products</li>
+                <li>Orders</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <h1>Welcome Back, Admin!</h1>
+            <div class="stats-cards">
+                <div class="card">Total Products: 120</div>
+                <div class="card">Total Sales: $5,000</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

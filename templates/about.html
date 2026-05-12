@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="ab-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <p class="ab-label">THE ARCHITECTURE OF MOVEMENT</p>
+                <h1 class="ab-headline">Engineered<br>for the<br>relentless.</h1>
+            </div>
+            <div class="col-lg-7">
+                <p class="ab-intro">
+                    At ShoesPark, we strip away the superfluous. We believe that true
+                    premium quality is found in the precise intersection of advanced
+                    biomechanics and restrained aesthetic form. Every silhouette we
+                    construct is a testament to purposeful design.
+                </p>
+                <div class="ab-hero-img">
+                    <img src="{% static 'images/gambar1.jpg' %}" alt="ShoesPark Shoe" class="ab-shoe-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="ab-mission">
+    <div class="container">
+        <p class="ab-mission-text">
+            Our mission is to engineer footwear that acts as an invisible extension of the
+            human form, providing uncompromising performance wrapped in gallery-grade minimalism.
+        </p>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="ab-process">
+    <div class="container">
+        <div class="ab-process-header">
+            <h2 class="ab-process-title">The Process</h2>
+            <span class="ab-process-label">PRECISION LAB</span>
+        </div>
+        <div class="row g-0 ab-process-grid">
+            <div class="col-lg-7">
+                <div class="ab-process-main">
+                    <img src="{% static 'images/gambar13.jpg' %}" alt="Material Selection" class="ab-process-main-img">
+                    <span class="ab-process-tag">01. Material Selection</span>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="ab-process-card">
+                    <div class="ab-process-icon">✂</div>
+                    <h5>Obsessive Engineering</h5>
+                    <p>Every curve and seam is modeled digitally before ever touching physical material,
+                    ensuring structural integrity without visual bulk.</p>
+                </div>
+                <div class="ab-process-card-img">
+                    <img src="{% static 'images/gambar15.jpg' %}" alt="Sole Engineering" class="ab-process-sub-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

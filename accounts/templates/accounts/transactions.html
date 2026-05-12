@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+        <div class="row">
+            {% include 'accounts/sidebar.html' %}
+            
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <strong class="d-inline-block mr-3">Transactions History</strong>
+                    </header>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Transaction ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#TRX-99812</td>
+                                    <td>23 Apr 2026</td>
+                                    <td>Payment</td>
+                                    <td>$100.00</td>
+                                    <td><span class="badge bg-success text-white">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td>#TRX-99811</td>
+                                    <td>20 Apr 2026</td>
+                                    <td>Refund</td>
+                                    <td>$45.00</td>
+                                    <td><span class="badge bg-warning text-dark">Processing</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}

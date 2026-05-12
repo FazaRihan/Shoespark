@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!-- ========================= SECTION CONTENT ========================= -->
+    <section class="login-section">
+        {% if request.GET.command == "verification" %}
+    <div class="verification-banner">
+    <div class="verification-card">
+        <p>Thank you for registering with us, please check your email to activate your account.</p>
+        <br>
+        <span>{{ request.GET.email }}</span>
+        <br><br>
+        <div class="already-verified">
+        Already Verified?
+        <br><br>
+        <a href="{% url 'login' %}" class="btn-login-here">Login Here</a>
+        </div>
+    </div>
+    </div>
+{% else %}
+        <!-- ============================ COMPONENT LOGIN   ================================= -->
+            <div class="login-wrapper">
+    <!-- Brand -->
+    <div class="brand-name">SHOESPARK</div>
+    <h1 class="welcome-heading">Welcome Back</h1>
+    <p class="welcome-sub">Sign in to access your curated collection.</p>
+
+    <!-- Card -->
+    <div class="login-card">
+    {% include 'includes/alerts.html' %}
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+
+        <!-- Email -->
+        <div class="field-group">
+        <label class="field-label" for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            class="field-input"
+            placeholder="your@email.com"
+            name="email"
+            autocomplete="email"
+        >
+        </div>
+
+        <!-- Password -->
+        <div class="field-group">
+        <div class="field-label-row">
+            <label class="field-label" for="password">Password</label>
+            <a href="{% url 'forgotpassword' %}" class="forgot-link">Forgot Password?</a>
+        </div>
+        <input
+            type="password"
+            id="password"
+            class="field-input"
+            placeholder="••••••••"
+            name="password"
+            autocomplete="current-password"
+        >
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-signin">
+        Sign In &nbsp;&#8594;
+        </button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">Or</span>
+        <span class="divider-line"></span>
+    </div>
+
+    <!-- Social Buttons -->
+    <button class="btn-social btn-google" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px;flex-shrink:0;">
+        <path d="M17.64 9.20455C17.64 8.56637 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
+        <path d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5614C11.2418 14.1014 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8373 3.96409 10.71H0.957275V13.0418C2.43818 15.9832 5.48182 18 9 18Z" fill="#34A853"/>
+        <path d="M3.96409 10.71C3.78409 10.17 3.68182 9.59318 3.68182 9C3.68182 8.40682 3.78409 7.83 3.96409 7.29V4.95818H0.957275C0.347727 6.17318 0 7.54773 0 9C0 10.4523 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z" fill="#FBBC05"/>
+        <path d="M9 3.57955C10.3214 3.57955 11.5077 4.03364 12.4405 4.92545L15.0218 2.34409C13.4632 0.891818 11.4259 0 9 0C5.48182 0 2.43818 2.01682 0.957275 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+    </button>
+
+    <button class="btn-social btn-apple" type="button">
+        <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:8px;flex-shrink:0;">
+        <path d="M13.1719 9.55859C13.1602 8.00781 13.8438 6.82422 15.2227 5.97266C14.4453 4.87109 13.2734 4.26172 11.7344 4.14453C10.2734 4.03125 8.67969 4.99219 8.09375 4.99219C7.47266 4.99219 6.05469 4.18359 4.92578 4.18359C2.59375 4.21875 0.125 6.01953 0.125 9.69141C0.125 10.793 0.320313 11.9297 0.710938 13.1016C1.23438 14.6484 3.16016 18.0469 5.16406 17.9883C6.22266 17.9648 6.96875 17.2617 8.34375 17.2617C9.67969 17.2617 10.3672 17.9883 11.5508 17.9883C13.5742 17.9609 15.3203 14.8828 15.8203 13.332C13.2031 12.1172 13.1719 9.625 13.1719 9.55859ZM10.8398 2.73047C11.9336 1.43359 11.8359 0.253906 11.8047 -0.015625C10.8008 0.046875 9.63281 0.660156 8.96484 1.42578C8.22656 2.25 7.79297 3.27344 7.88281 4.125C8.96875 4.20703 9.95703 3.65234 10.8398 2.73047Z" fill="white"/>
+        </svg>
+        Continue with Apple
+    </button>
+    </div>
+
+    <!-- Register Link -->
+    <p class="register-link">
+    Don't have an account?&nbsp; <a href="{% url 'register' %}">Sign Up</a>
+    </p>
+</div>
+        <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+        {% endif %}    
+    </section>
+
+    <style>
+  /* ── Reset & Base ─────────────────────────────────────── */
+.login-section {
+    min-height: 84vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("{% static 'images/gambar12.jpg' %}"); 
+    background-size: cover;        
+    background-position: center;   
+    background-repeat: no-repeat; 
+    padding: 48px 16px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-left: auto !important;   
+    margin-right: auto !important; 
+}
+
+  /* ── Wrapper ──────────────────────────────────────────── */
+.login-wrapper {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+  /* ── Brand ────────────────────────────────────────────── */
+.brand-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #111;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.welcome-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 8px 0;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.welcome-sub {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0 0 28px 0;
+    text-align: center;
+}
+
+  /* ── Card ─────────────────────────────────────────────── */
+.login-card {
+    width: 100%;
+    border-radius: 12px;
+    padding: 36px 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+  /* ── Form Fields ──────────────────────────────────────── */
+.field-group {
+    margin-bottom: 24px;
+}
+
+.field-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+}
+
+.field-label-row .field-label {
+    margin-bottom: 0;
+}
+
+.field-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #ddd;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: #111;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.field-input::placeholder {
+    color: #aaa;
+}
+
+.field-input:focus {
+    border-bottom-color: #3b5bdb;
+}
+
+  /* ── Forgot Password ──────────────────────────────────── */
+.forgot-link {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+}
+
+.forgot-link:hover {
+    color: #3b5bdb;
+}
+
+  /* ── Sign In Button ───────────────────────────────────── */
+.btn-signin {
+    width: 100%;
+    background: #3b5bdb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    letter-spacing: 0.01em;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-signin:hover {
+    background: #2f4ac5;
+}
+
+.btn-signin:active {
+    transform: scale(0.99);
+}
+
+  /* ── Divider ──────────────────────────────────────────── */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.divider-text {
+    font-size: 0.82rem;
+    color: #888;
+    white-space: nowrap;
+}
+
+  /* ── Social Buttons ───────────────────────────────────── */
+.btn-social {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-bottom: 12px;
+}
+
+.btn-social:active {
+    transform: scale(0.99);
+}
+
+.btn-social:last-child {
+    margin-bottom: 0;
+}
+
+.btn-google {
+    background: #fff;
+    border: 1.5px solid #d1d5db;
+    color: #111;
+}
+
+.btn-google:hover {
+    background: #f9fafb;
+}
+
+.btn-apple {
+    background: #111;
+    border: 1.5px solid #111;
+    color: #fff;
+}
+
+.btn-apple:hover {
+    background: #222;
+}
+
+  /* ── Register Link ────────────────────────────────────── */
+.register-link {
+    margin-top: 24px;
+    font-size: 0.88rem;
+    color: #555;
+    text-align: center;
+}
+
+.register-link a {
+    font-weight: 700;
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.register-link a:hover {
+    color: #3b5bdb;
+}
+
+  /* ── Verification Banner ──────────────────────────────── */
+.verification-banner {
+    width: 100%;
+    max-width: 700px;
+    margin: 80px auto 0;
+}
+
+.verification-card {
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    padding: 28px 32px;
+    color: #1e3a8a;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.already-verified {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 8px;
+}
+
+.btn-login-here {
+    display: inline-block;
+    background: #3b5bdb;
+    color: #fff;
+    padding: 9px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-login-here:hover {
+    background: #2f4ac5;
+}
+
+  /* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 520px) {
+    .login-card {
+    padding: 28px 20px;
+    }
+    .welcome-heading {
+    font-size: 1.6rem;
+    }
+}
+</style>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+{% endblock %}
