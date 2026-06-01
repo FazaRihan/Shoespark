@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.contrib.admin.views.decorators import staff_member_required
@@ -29,10 +30,13 @@ def store(request, category_slug=None):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
+
+    new_arrivals = Product.objects.filter(is_new=True, is_available=True).order_by('-created_at')[:6]
     
     context = {
         'products': paged_products,
         'product_count': product_count,
+        'new_arrivals': new_arrivals,
     }
     return render(request, 'store/index.html', context)
 
@@ -63,3 +67,12 @@ def search(request):
 
 def about(request):
     return render(request, 'about.html')
+
+def contact(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        email     = request.POST.get('email')
+        message   = request.POST.get('message')
+        messages.success(request, 'Pesan kamu berhasil dikirim!')
+        return redirect('contact')
+    return render(request, 'contact.html')

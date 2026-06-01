@@ -11,6 +11,7 @@ class Product(models.Model):
     image           = models.ImageField(upload_to='photos/products')
     stock           = models.IntegerField()
     is_available    = models.BooleanField(default=True)
+    is_new          = models.BooleanField(default=False)
     
     created_at      = models.DateTimeField(auto_now_add=True)
     updated_at      = models.DateTimeField(auto_now=True)

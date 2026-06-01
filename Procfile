@@ -1,0 +1,1 @@
+web: gunicorn tokoonline.wsgi --log-file -

@@ -3,193 +3,752 @@
 
 {% block content %}
 
-<!-- ========================= SECTION PAGETOP ========================= -->
-<section class="section-pagetop bg">
+<!-- ======================== SECTION PAGETOP ======================== -->
+<section class="sp-pagetop">
     <div class="container">
         {% if 'search' in request.path %}
-        <h2 class="title-page">Search result</h2>
+        <h2 class="sp-page-title">Search Results</h2>
         {% else %}
-        <h2 class="title-page">Our Store</h2>
+        <h2 class="sp-page-title">Our Store</h2>
         {% endif %}
-    </div> <!-- container //  -->
-</section>
-<!-- ========================= SECTION INTRO END// ========================= -->
-
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-y">
-    <div class="container">
-    
-    <div class="row">
-        <aside class="col-md-3">
-            
-    <div class="card">
-        <article class="filter-group">
-            <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Categories</h6>
-                </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_1" style="">
-                <div class="card-body">
-                    <ul class="list-menu">
-                        <li><a href="{% url 'store' %}">All Products</a></li>
-                        {% for category in links %}
-                            <li><a href="{{category.get_url}}">{{category.name}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div> <!-- card-body.// -->
-            </div>
-        </article> <!-- filter-group  .// -->
-        <article class="filter-group">
-            <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Sizes </h6>
-                </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_4" style="">
-                <div class="card-body">
-                    <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> XS </span>
-                    </label>
-        
-                    <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> SM </span>
-                    </label>
-        
-                    <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> LG </span>
-                    </label>
-        
-                    <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> XXL </span>
-                    </label>
-            </div><!-- card-body.// -->
-            </div>
-        </article> <!-- filter-group .// -->
-        
-        <article class="filter-group">
-            <header class="card-header">
-                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-                    <i class="icon-control fa fa-chevron-down"></i>
-                    <h6 class="title">Price range </h6>
-                </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_3" style="">
-                <div class="card-body">
-                    
-                    <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Min</label>
-                        <!-- <input class="form-control" placeholder="$0" type="number"> -->
-                            <select class="mr-2 form-control">
-                                <option value="0">$0</option>
-                                <option value="50">$50</option>
-                                <option value="100">$100</option>
-                                <option value="150">$150</option>
-                                <option value="200">$200</option>
-                                <option value="500">$500</option>
-                                <option value="1000">$1000</option>
-                            </select>
-                    </div>
-                    <div class="form-group text-right col-md-6">
-                        <label>Max</label>
-                            <select class="mr-2 form-control">
-                                <option value="50">$50</option>
-                                <option value="100">$100</option>
-                                <option value="150">$150</option>
-                                <option value="200">$200</option>
-                                <option value="500">$500</option>
-                                <option value="1000">$1000</option>
-                                <option value="2000">$2000+</option>
-                            </select>
-                    </div>
-                    </div> <!-- form-row.// -->
-                    <button class="btn btn-block btn-primary">Apply</button>
-                </div><!-- card-body.// -->
-            </div>
-        </article> <!-- filter-group .// -->
-        
-    </div> <!-- card.// -->
-    
-        </aside> <!-- col.// -->
-        <main class="col-md-9">
-    
-    <header class="border-bottom mb-4 pb-3">
-            <div class="form-inline">
-                <span class="mr-md-auto"><b>{{ product_count }}</b> items found</span>
-                
-            </div>
-    </header><!-- sect-heading -->
-    
-    <div class="row">
-        {% if products %}
-            {% for product in products %}
-            <div class="col-md-4">
-                <figure class="card card-product-grid">
-                    <div class="img-wrap"> 
-                        
-                        <a href="{{  product.get_url  }}"><img src="{{ product.image.url }}"></a>
-                        
-                    </div> <!-- img-wrap.// -->
-                    <figcaption class="info-wrap">
-                        <div class="fix-height">
-                            <a href="{{  product.get_url  }}" class="title">{{ product.name }}</a>
-                            <div class="price-wrap mt-2">
-                                <span class="price">${{ product.price }}</span>
-                            </div> <!-- price-wrap.// -->
-                        </div>
-                        <a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details</a>
-                    </figcaption>
-                </figure>
-            </div> <!-- col.// -->
-            {% endfor %}
-        {% else %}
-            <div class="text-center">
-                <h2>No products found</h2>
-            </div>
-        {% endif %}
-        
-    </div> <!-- row end.// -->
-    
-    
-    <nav class="mt-4" aria-label="Page navigation sample">
-    {% if products.has_other_pages %}
-        <ul class="pagination">
-            {% if products.has_previous%}
-                <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
-            {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-            {% endif %}
-            
-            {% for i in products.paginator.page_range %}
-                {% if products.number == i %}
-                    <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
-                {% else %}
-                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>    
-                {% endif %}
-            {% endfor %}
-
-            {% if products.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
-            {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-            {% endif %}
-        </ul>
-    {% endif %}
-    </nav>
-    
-        </main> <!-- col.// -->
-    
     </div>
-    
-    </div> <!-- container .//  -->
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<!-- ======================== SECTION CONTENT ======================== -->
+<section class="sp-section">
+    <div class="container">
+        <div class="row">
+
+            <!-- ===== SIDEBAR FILTER ===== -->
+            <aside class="col-md-3">
+                <div class="sp-sidebar">
+
+                    <!-- Category Filter -->
+                    <div class="sp-filter-block">
+                        <p class="sp-filter-label">CATEGORY</p>
+                        <ul class="sp-cat-list">
+                            <li>
+                                <label class="sp-check-item">
+                                    <input type="checkbox" class="sp-checkbox" 
+                                        onclick="window.location.href='{% url 'store' %}'">
+                                    <span class="sp-check-text">All Products</span>
+                                </label>
+                            </li>
+                            {% for category in links %}
+                            <li>
+                                <label class="sp-check-item">
+                                    <input type="checkbox" class="sp-checkbox"
+                                        {% if request.GET.category == category.slug %}checked{% endif %}
+                                        onclick="window.location.href='{{ category.get_url }}'">
+                                    <span class="sp-check-text">{{ category.name }}</span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="sp-divider"></div>
+
+                    <!-- Size Filter -->
+                    <div class="sp-filter-block">
+                        <p class="sp-filter-label">SIZE (US)</p>
+                        <form method="get" action="" id="sizeForm">
+                            {% if request.GET.category %}
+                            <input type="hidden" name="category" value="{{ request.GET.category }}">
+                            {% endif %}
+                            {% if request.GET.min_price %}
+                            <input type="hidden" name="min_price" value="{{ request.GET.min_price }}">
+                            {% endif %}
+                            {% if request.GET.max_price %}
+                            <input type="hidden" name="max_price" value="{{ request.GET.max_price }}">
+                            {% endif %}
+                            <input type="hidden" name="size" id="selectedSize" value="{{ request.GET.size }}">
+                            <div class="sp-size-grid">
+                                {% for s in sizes %}
+                                <button type="button" class="sp-size-btn {% if request.GET.size == s %}active{% endif %}"
+                                    onclick="selectSize('{{ s }}')">{{ s }}</button>
+                                {% empty %}
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XS' %}active{% endif %}" onclick="selectSize('XS')">3.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'S' %}active{% endif %}" onclick="selectSize('S')">4</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'M' %}active{% endif %}" onclick="selectSize('M')">4.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'L' %}active{% endif %}" onclick="selectSize('L')">5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XL' %}active{% endif %}" onclick="selectSize('XL')">5.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">6</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">6.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">7</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">7.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">8</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">8.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">9</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">9.5</button>
+                                <button type="button" class="sp-size-btn {% if request.GET.size == 'XXL' %}active{% endif %}" onclick="selectSize('XXL')">10</button>
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sp-divider"></div>
+
+                    <!-- Color Filter -->
+                    <div class="sp-filter-block">
+                        <p class="sp-filter-label">COLOR</p>
+                        <div class="sp-color-row">
+                            <button class="sp-color-dot {% if request.GET.color == 'black' %}active{% endif %}" 
+                                style="background:#1a1a1a" title="Black"
+                                onclick="filterColor('black')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'white' %}active{% endif %}" 
+                                style="background:#e8e8e8; border-color:#ccc" title="White"
+                                onclick="filterColor('white')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'gray' %}active{% endif %}" 
+                                style="background:#9e9e9e" title="Gray"
+                                onclick="filterColor('gray')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'blue' %}active{% endif %}" 
+                                style="background:#2563eb" title="Blue"
+                                onclick="filterColor('blue')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'red' %}active{% endif %}" 
+                                style="background:#dc2626" title="Red"
+                                onclick="filterColor('red')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'dark green' %}active{% endif %}" 
+                                style="background:#1F6F5F" title="Dark Green"
+                                onclick="filterColor('dark green')"></button>
+                            <button class="sp-color-dot {% if request.GET.color == 'pink' %}active{% endif %}" 
+                                style="background:#FF85BB" title="Pink"
+                                onclick="filterColor('pink')"></button>
+                        </div>
+                    </div>
+
+                    <div class="sp-divider"></div>
+
+                    <!-- Price Range Filter -->
+                    <div class="sp-filter-block">
+                        <p class="sp-filter-label">PRICE RANGE</p>
+                        <form method="get" action="" id="priceForm">
+                            {% if request.GET.category %}
+                            <input type="hidden" name="category" value="{{ request.GET.category }}">
+                            {% endif %}
+                            {% if request.GET.size %}
+                            <input type="hidden" name="size" value="{{ request.GET.size }}">
+                            {% endif %}
+                            <div class="sp-price-display">
+                                <span>${{ request.GET.min_price|default:"0" }}</span>
+                                <span>${{ request.GET.max_price|default:"300" }}+</span>
+                            </div>
+                            <input type="hidden" name="min_price" value="{{ request.GET.min_price|default:'0' }}">
+                            <input type="range" class="sp-price-slider" 
+                                min="0" max="500" step="10"
+                                value="{{ request.GET.max_price|default:'300' }}"
+                                name="max_price"
+                                oninput="this.previousElementSibling.previousElementSibling.querySelector('span:last-child').textContent = '$' + this.value + '+'">
+                            <button type="submit" class="sp-apply-btn">Apply</button>
+                        </form>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- ===== MAIN CONTENT ===== -->
+            <main class="col-md-9">
+
+                <!-- Store Header: Title + Sort -->
+                <div class="sp-main-header">
+                    <h1 class="sp-cat-title">
+                        {% if request.GET.category %}
+                            {{ request.GET.category|title }} Sneakers
+                        {% elif 'search' in request.path %}
+                            Search Results
+                        {% else %}
+                            All Products
+                        {% endif %}
+                    </h1>
+                    <div class="sp-sort-wrap">
+                        <span class="sp-sort-label">Sort by:</span>
+                        <select class="sp-sort-select" onchange="sortProducts(this.value)">
+                            <option value="featured" {% if request.GET.sort == 'featured' or not request.GET.sort %}selected{% endif %}>Featured</option>
+                            <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                            <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Product Count -->
+                <p class="sp-count"><b>{{ product_count }}</b> items found</p>
+
+                <!-- Product Grid -->
+                <div class="sp-product-grid">
+                    {% if products %}
+                        {% for product in products %}
+                        <div class="sp-card">
+                            <div class="sp-card-img">
+                                <a href="{{ product.get_url }}">
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                </a>
+                                <!-- Quick view overlay -->
+                                <div class="sp-card-overlay">
+                                    <a href="{{ product.get_url }}" class="sp-quick-view">View Details</a>
+                                </div>
+                            </div>
+                            <div class="sp-card-body">
+                                <div class="sp-card-row">
+                                    <div class="sp-card-info">
+                                        <h6 class="sp-prod-name">
+                                            <a href="{{ product.get_url }}">{{ product.name }}</a>
+                                        </h6>
+                                        <p class="sp-prod-sub">{{ product.category }}</p>
+                                    </div>
+                                    <span class="sp-prod-price">${{ product.price }}</span>
+                                </div>
+                                <!-- Color dots (decorative, from product colors if available) -->
+                                <div class="sp-dot-row">
+                                    {% for variation in product.variation_set.colors %}
+                                        <span class="sp-color-micro" 
+                                            style="background:{{ variation.variation_value|lower }}"></span>
+                                    {% empty %}
+                                        <span class="sp-color-micro" style="background:#222"></span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="sp-empty">
+                            <div class="sp-empty-icon">👟</div>
+                            <h4>No products found</h4>
+                            <p>Try adjusting your filters or <a href="{% url 'store' %}">browse all products</a>.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Pagination -->
+                {% if products.has_other_pages %}
+                <nav class="sp-pagination">
+                    <ul class="sp-page-list">
+                        {% if products.has_previous %}
+                        <li>
+                            <a href="?page={{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                               class="sp-page-btn sp-page-prev">← Prev</a>
+                        </li>
+                        {% else %}
+                        <li><span class="sp-page-btn sp-page-disabled">← Prev</span></li>
+                        {% endif %}
+
+                        {% for i in products.paginator.page_range %}
+                            {% if products.number == i %}
+                            <li><span class="sp-page-btn sp-page-active">{{ i }}</span></li>
+                            {% elif i <= 3 or i == products.paginator.num_pages or i == products.number|add:"-1" or i == products.number|add:"1" %}
+                            <li>
+                                <a href="?page={{ i }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                                   class="sp-page-btn">{{ i }}</a>
+                            </li>
+                            {% elif i == 4 and products.number > 5 %}
+                            <li><span class="sp-page-btn sp-page-ellipsis">…</span></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                        <li>
+                            <a href="?page={{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                               class="sp-page-btn sp-page-next">Next →</a>
+                        </li>
+                        {% else %}
+                        <li><span class="sp-page-btn sp-page-disabled">Next →</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+
+            </main>
+        </div>
+    </div>
+</section>
+
+<!-- ======================== STYLES ======================== -->
+<style>
+/* ===== BASE ===== */
+.sp-pagetop {
+    background: #f7f7f7;
+    padding: 1.5rem 0 1rem;
+    border-bottom: 1px solid #eee;
+}
+.sp-page-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #555;
+    margin: 0;
+}
+.sp-section {
+    padding: 2rem 0 3rem;
+    background: #fafafa;
+}
+
+/* ===== SIDEBAR ===== */
+.sp-sidebar {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ececec;
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 1rem;
+}
+.sp-filter-block {
+    padding: 1.1rem 1.3rem;
+}
+.sp-filter-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #999;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
+}
+.sp-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 0 1.3rem;
+}
+
+/* Category checkboxes */
+.sp-cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sp-cat-list li {
+    margin-bottom: 0.35rem;
+}
+.sp-check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    cursor: pointer;
+    margin: 0;
+}
+.sp-checkbox {
+    width: 15px;
+    height: 15px;
+    accent-color: #111;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.sp-check-text {
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.4;
+}
+.sp-check-item:hover .sp-check-text {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Size buttons */
+.sp-size-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.sp-size-btn {
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #333;
+    transition: all 0.18s ease;
+    padding: 0;
+}
+.sp-size-btn:hover {
+    border-color: #aaa;
+    background: #f5f5f5;
+}
+.sp-size-btn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+/* Color swatches */
+.sp-color-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.sp-color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    padding: 0;
+}
+.sp-color-dot:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.sp-color-dot.active {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #333;
+}
+
+/* Price range */
+.sp-price-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #555;
+    margin-bottom: 0.4rem;
+}
+.sp-price-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    background: #ddd;
+    border-radius: 2px;
+    outline: none;
+    margin-bottom: 0.9rem;
+    cursor: pointer;
+}
+.sp-price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #111;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.sp-apply-btn {
+    width: 100%;
+    padding: 0.5rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.18s;
+}
+.sp-apply-btn:hover {
+    background: #333;
+}
+
+/* ===== MAIN AREA ===== */
+.sp-main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+}
+.sp-cat-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+.sp-sort-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.sp-sort-label {
+    font-size: 0.82rem;
+    color: #aaa;
+    white-space: nowrap;
+}
+.sp-sort-select {
+    border: 1.5px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 0.3rem 1.8rem 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #222;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E") no-repeat right 0.6rem center;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+.sp-count {
+    font-size: 0.82rem;
+    color: #aaa;
+    margin: 0.2rem 0 1.3rem;
+}
+.sp-count b {
+    color: #333;
+}
+
+/* ===== PRODUCT GRID ===== */
+.sp-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.1rem;
+}
+
+/* Product Card */
+.sp-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+    transition: box-shadow 0.22s, transform 0.22s;
+}
+.sp-card:hover {
+    box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+.sp-card-img {
+    position: relative;
+    background: #1c2e2e;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+.sp-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+    display: block;
+}
+.sp-card:hover .sp-card-img img {
+    transform: scale(1.06);
+}
+
+/* Overlay on hover */
+.sp-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+.sp-card:hover .sp-card-overlay {
+    opacity: 1;
+}
+.sp-quick-view {
+    background: #fff;
+    color: #111;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: background 0.18s, color 0.18s;
+}
+.sp-quick-view:hover {
+    background: #111;
+    color: #fff;
+}
+
+/* Badges */
+.sp-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    z-index: 2;
+}
+.sp-badge-new {
+    background: #fff;
+    color: #111;
+}
+.sp-badge-exclusive {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* Card body */
+.sp-card-body {
+    padding: 0.85rem 1rem;
+}
+.sp-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+.sp-card-info {
+    flex: 1;
+    min-width: 0;
+}
+.sp-prod-name {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sp-prod-name a {
+    color: #111;
+    text-decoration: none;
+}
+.sp-prod-name a:hover {
+    color: #555;
+}
+.sp-prod-sub {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin: 0.1rem 0 0;
+}
+.sp-prod-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #111;
+    white-space: nowrap;
+    padding-top: 0.05rem;
+}
+
+/* Color dots on card */
+.sp-dot-row {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+}
+.sp-color-micro {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ===== EMPTY STATE ===== */
+.sp-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #999;
+}
+.sp-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+.sp-empty h4 {
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+}
+.sp-empty p {
+    font-size: 0.9rem;
+}
+.sp-empty a {
+    color: #111;
+    font-weight: 600;
+}
+
+/* ===== PAGINATION ===== */
+.sp-pagination {
+    margin-top: 2.5rem;
+}
+.sp-page-list {
+    list-style: none;
+    display: flex;
+    gap: 0.3rem;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+.sp-page-btn {
+    display: inline-block;
+    min-width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    padding: 0 0.6rem;
+    border-radius: 5px;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.18s;
+    cursor: pointer;
+}
+.sp-page-btn:hover {
+    background: #f0f0f0;
+    color: #111;
+}
+.sp-page-active {
+    background: #111;
+    color: #fff !important;
+    cursor: default;
+}
+.sp-page-active:hover {
+    background: #111;
+}
+.sp-page-disabled {
+    color: #ccc !important;
+    cursor: default;
+    pointer-events: none;
+}
+.sp-page-ellipsis {
+    cursor: default;
+    color: #bbb;
+}
+.sp-page-prev, .sp-page-next {
+    font-weight: 700;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .sp-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .sp-cat-title {
+        font-size: 1.2rem;
+    }
+    .sp-sort-label {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    .sp-product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<!-- ======================== SCRIPTS ======================== -->
+<script>
+function selectSize(size) {
+    document.getElementById('selectedSize').value = size;
+    // Toggle active class
+    document.querySelectorAll('.sp-size-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === size);
+    });
+    document.getElementById('sizeForm').submit();
+}
+
+function filterColor(color) {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('color') === color) {
+        url.searchParams.delete('color'); // toggle off
+    } else {
+        url.searchParams.set('color', color);
+    }
+    window.location.href = url.toString();
+}
+
+function sortProducts(value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', value);
+    window.location.href = url.toString();
+}
+</script>
 
 {% endblock %}

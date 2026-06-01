@@ -18,3 +18,7 @@ venv/
 
 # Map files
 *.map
+
+# Media & Static
+media/
+staticfiles/

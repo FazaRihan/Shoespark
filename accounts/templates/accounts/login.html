@@ -111,7 +111,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("{% static 'images/gambar12.jpg' %}"); 
+    background-image: url("{% static 'images/gambar16.jpg' %}"); 
     background-size: cover;        
     background-position: center;   
     background-repeat: no-repeat; 
@@ -136,7 +136,7 @@
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.2em;
-    color: #111;
+    color: #000000;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -152,19 +152,21 @@
 
 .welcome-sub {
     font-size: 0.95rem;
-    color: #666;
+    color: #000000;
     margin: 0 0 28px 0;
     text-align: center;
 }
 
   /* ── Card ─────────────────────────────────────────────── */
 .login-card {
-    width: 100%;
-    border-radius: 12px;
-    padding: 36px 40px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 12px;                
+    padding: 48px 44px 40px;            
+    backdrop-filter: blur(0px);          
+    border: none;                     
+    box-shadow: 
+        0 32px 80px rgba(0, 0, 0, 0.25),
+        0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
   /* ── Form Fields ──────────────────────────────────────── */
@@ -180,12 +182,12 @@
 }
 
 .field-label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #444;
+    font-size: 0.72rem;        
+    font-weight: 500;
+    text-transform: uppercase; 
+    letter-spacing: 0.09em;   
+    color: #000000;    
     margin-bottom: 6px;
-    letter-spacing: 0.01em;
 }
 
 .field-label-row .field-label {
@@ -206,7 +208,7 @@
 }
 
 .field-input::placeholder {
-    color: #aaa;
+    color: #000000;
 }
 
 .field-input:focus {
@@ -267,7 +269,7 @@
 
 .divider-text {
     font-size: 0.82rem;
-    color: #888;
+    color: #000000;
     white-space: nowrap;
 }
 

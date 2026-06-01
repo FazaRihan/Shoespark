@@ -1,55 +1,347 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 {% load static %}
 
-<!-- ========================= SECTION MAIN ========================= -->
-<section class="section-hero text-white"
-	style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'images/logo1.jpg' %}') no-repeat center center; background-size: cover; min-height: 1000px; width: 100%;">
-	<div class="container py-5">
-        <div class="row pt-5 pb-5">
-            <div class="col-md-7 col-lg-8">
-                
-                <h1 class="display-3 font-weight-bold mb-4">Step into performance</h1>
-                <p class="lead mb-5">Premium footwear engineered for athletes, adventurers, and everyday champions.</p>
-                
-                <div class="hero-btns mt-4">
-                    <a href="{% url 'store' %}" class="btn btn-primary btn-lg rounded-pill px-5 mr-3">Shop now &rarr;</a>
-                    <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5">Our story</a>
+<!-- Pautan Google Fonts untuk tipografi premium dan elegan seperti Gambar 1 -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    /* Tetapan Font & Warna Latar Belakang Minimalis */
+    .shoespark-body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #ffffff;
+        color: #1a1a1a;
+    }
+    
+    .serif-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: #111111;
+        line-height: 1.15;
+    }
+
+    /* Penggayaan Bahagian Hero */
+    .hero-section {
+        padding: 90px 0;
+        background-color: #ffffff;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        color: #666666;
+        line-height: 1.7;
+        max-width: 440px;
+    }
+
+    /* Penggayaan Butang Minimalis */
+    .btn-custom-primary {
+        background-color: #1d4ed8; /* Biru terang khas Gambar 1 */
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 14px 30px;
+        border-radius: 2px; /* Siku tajam dan tegas */
+        border: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-custom-primary:hover {
+        background-color: #1e40af;
+        color: #ffffff;
+        box-shadow: 0 4px 15px rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-custom-outline {
+        background-color: transparent;
+        color: #1a1a1a;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 14px 30px;
+        border-radius: 2px;
+        border: 1px solid #d1d5db;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-custom-outline:hover {
+        background-color: #f9fafb;
+        border-color: #1a1a1a;
+        color: #1a1a1a;
+    }
+
+    /* Bekas Imej Hero dengan Efek Bayangan Lembut (Soft Shadow) */
+    .hero-image-container {
+        position: relative;
+        background-color: #f3f4f6; /* Latar belakang kelabu lembut */
+        border-radius: 8px;
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 480px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    }
+
+    .hero-image-container img {
+        max-width: 105%;
+        height: auto;
+        filter: drop-shadow(0 30px 35px rgba(0, 0, 0, 0.18));
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-image-container:hover img {
+        transform: scale(1.04) translateY(-5px);
+    }
+
+    /* Bahagian Produk Baharu (New Arrivals) */
+    .section-header-line {
+        border-bottom: 1px solid #f3f4f6;
+        padding-bottom: 15px;
+        margin-bottom: 40px;
+    }
+
+    .view-all-text {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        border-bottom: 2px solid #1a1a1a;
+        transition: all 0.3s ease;
+    }
+
+    .view-all-text:hover {
+        color: #1d4ed8;
+        border-color: #1d4ed8;
+    }
+
+    /* Penggayaan Kad Grid Produk */
+    .product-grid-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 0px;
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .product-img-wrapper {
+        background-color: #f3f4f6; /* Menyamakan warna latar abu-abu lembut */
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 290px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-img-wrapper img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s ease;
+    }
+
+    .product-grid-card:hover .product-img-wrapper img {
+        transform: scale(1.08);
+    }
+
+    /* Lencana "NEW" */
+    .badge-new-arrival {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: #ffffff;
+        color: #111111;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        padding: 5px 12px;
+        border-radius: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        z-index: 5;
+    }
+
+    .product-details {
+        padding: 18px 0 10px 0;
+    }
+
+    .product-name-link {
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #111111;
+        margin-bottom: 6px;
+        text-decoration: none;
+        display: block;
+        transition: color 0.2s ease;
+    }
+
+    .product-name-link:hover {
+        color: #1d4ed8;
+        text-decoration: none;
+    }
+
+    .product-price-tag {
+        font-size: 0.95rem;
+        color: #666666;
+        font-weight: 500;
+    }
+
+/* Horizontal Scroll New Arrivals */
+.scroll-wrapper {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-card {
+    min-width: 260px;
+    max-width: 260px;
+    width: 260px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+.scroll-card .product-img-wrapper {
+    height: 260px;
+    overflow: hidden;
+}
+
+.scroll-card .product-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Arrow Button */
+.arrow-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.arrow-btn:hover {
+    background: #f0f0f0;
+}
+
+.arrow-left { left: -18px; }
+.arrow-right { right: -18px; }
+</style>
+
+<div class="shoespark-body">
+    <!-- BAHAGIAN HERO (Inspirasi Gambar 1) -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Sisi Kiri: Teks Promosi & Tindakan -->
+                <div class="col-lg-5 col-md-6 mb-5 mb-md-0">
+                    <h1 class="serif-title mb-4" style="font-size: 3.8rem;">
+                        Welcome To<br>Shoespark
+                    </h1>
+                    <p class="hero-subtitle mb-4">
+                        Alami gabungan sempurna antara bentuk minimalis dan prestasi tanpa kompromi. Temui sepatu yang khas untuk perjalanan modern anda.
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="{% url 'store' %}" class="btn-custom-primary">Shop Collection</a>
+                        <a href="{% url 'about' %}" class="btn-custom-outline ms-2">Explore Tech</a>
+                    </div>
                 </div>
 
+                <!-- Sisi Kanan: Paparan Kasut Hero Utama (Format Statik Django) -->
+                <div class="col-lg-7 col-md-6">
+                    <div class="hero-image-container">
+                        <!-- Menggunakan imej dalam folder static anda; berserta fallback imej jika fail belum wujud -->
+                        <img src="{% static 'images/logo1.jpg' %}" onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80'" alt="Sepatu Hero ShoesPark">
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <!-- BAHAGIAN NEW ARRIVALS (Inspirasi Gambar 1) -->
+    <section class="py-4">
+        <div class="container">
+            <!-- Tajuk Seksyen & Pautan View All -->
+            <div class="section-header-line d-flex justify-content-between align-items-end">
+                <h2 class="serif-title" style="font-size: 2.2rem; margin: 0;">New Arrivals</h2>
+                <a href="{% url 'store' %}" class="view-all-text">View All</a>
+            </div>
+
+            <!-- Loop Produk Dinamik dari Pangkalan Data Django -->
+            <div class="position-relative">
+                <button class="arrow-btn arrow-left" onclick="slideScroll(-1)">&#8249;</button>
+                <div class="scroll-wrapper" id="newArrivalsScroll">
+                {% for product in products %}
+                <div class="scroll-card">
+                    <div class="product-grid-card">
+                        <div class="product-img-wrapper">
+                            <!-- Contoh meletakkan lencana "NEW" untuk produk terawal -->
+                            {% if product.is_new %}
+                            <span class="badge-new-arrival">New</span>
+                            {% endif %}
+                            
+                            <a href="{{ product.get_url }}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                <img src="{% static 'images/placeholder-shoe.png' %}" alt="{{ product.name }}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="product-details">
+                            <a href="{{ product.get_url }}" class="product-name-link">{{ product.name }}</a>
+                            <div class="product-price-tag">${{ product.price }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Tiada produk baharu buat masa ini.</p>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="arrow-btn arrow-right" onclick="slideScroll(1)">&#8250;</button>
     </div>
-</section><!-- ========================= SECTION MAIN END// ========================= -->
+        </div>
+    </section>
+</div>
 
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-	<div class="container">
-
-		<header class="section-heading">
-			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-			<h3 class="section-title">Popular products</h3>
-		</header><!-- sect-heading -->
-
-
-		<div class="row">
-			{% for product in products %}
-			<div class="col-md-3">
-				<div class="card card-product-grid">
-					<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}"> </a>
-					<figcaption class="info-wrap">
-						<a href="{{ product.get_url }}" class="title">{{ product.name }}</a>
-						<div class="price mt-1">$ {{ product.price }}</div> <!-- price-wrap.// -->
-					</figcaption>
-				</div>
-			</div> <!-- col.// -->
-			{% endfor %}
-		</div> <!-- row.// -->
-
-	</div><!-- container // -->
-</section>
-<!-- ========================= SECTION  END// ========================= -->
-
+<script>
+function slideScroll(direction) {
+    const wrapper = document.getElementById('newArrivalsScroll');
+    wrapper.scrollBy({ left: direction * 340, behavior: 'smooth' });
+}
+</script>
 {% endblock %}
