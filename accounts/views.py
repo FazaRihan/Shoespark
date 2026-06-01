@@ -34,7 +34,6 @@ def register(request):
                 username=username,
             )
             user.phone_number = phone_number
-            
             user.is_active = True 
             user.save()
             
