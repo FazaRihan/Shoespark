@@ -1,1 +1,1 @@
-web: python manage.py collectstatic --noinput && gunicorn tokoonline.wsgi
+web: python manage.py migrate && python manage.py createsuperuser --noinput || true && gunicorn tokoonline.wsgi
