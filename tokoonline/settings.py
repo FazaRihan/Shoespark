@@ -152,6 +152,8 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # SMTP CONFIGURATION
 EMAIL_HOST          = config('EMAIL_HOST', default='localhost')
 EMAIL_PORT          = config('EMAIL_PORT', default=25, cast=int)
