@@ -141,12 +141,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import cloudinary
-142   CLOUDINARY_STORAGE = {
-143       'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-144       'API_KEY': config('CLOUDINARY_API_KEY'),
-145       'API_SECRET': config('CLOUDINARY_API_SECRET'),
-146   }
-147   DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Media files Configuration
 MEDIA_URL = '/media/'
