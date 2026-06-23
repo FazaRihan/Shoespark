@@ -3,8 +3,12 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.contrib.admin.views.decorators import staff_member_required
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import ProductSerializer, VariationSerializer, CategorySerializer
 
-from store.models import Product
+from store.models import Product, Variation
 from category.models import Category
 from carts.models import CartItem
 from carts.views import _cart_id
@@ -76,3 +80,67 @@ def contact(request):
         messages.success(request, 'Pesan kamu berhasil dikirim!')
         return redirect('contact')
     return render(request, 'contact.html')
+
+# ─── REST API Views ────────────────────────────────────────
+
+@api_view(['GET'])
+def api_product_list(request):
+    products = Product.objects.filter(is_available=True).order_by('-created_at')
+    serializer = ProductSerializer(products, many=True)
+    return Response({'count': products.count(), 'results': serializer.data})
+
+
+@api_view(['GET'])
+def api_product_detail(request, pk):
+    try:
+        product = Product.objects.get(pk=pk, is_available=True)
+    except Product.DoesNotExist:
+        return Response({'error': 'Produk tidak ditemukan'}, status=status.HTTP_404_NOT_FOUND)
+    serializer = ProductSerializer(product)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_product_variations(request, pk):
+    try:
+        product = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        return Response({'error': 'Produk tidak ditemukan'}, status=status.HTTP_404_NOT_FOUND)
+    variations = Variation.objects.filter(product=product, is_active=True)
+    serializer = VariationSerializer(variations, many=True)
+    return Response({'product': product.name, 'variations': serializer.data})
+
+
+@api_view(['GET'])
+def api_new_arrivals(request):
+    products = Product.objects.filter(is_new=True, is_available=True).order_by('-created_at')
+    serializer = ProductSerializer(products, many=True)
+    return Response({'count': products.count(), 'results': serializer.data})
+
+
+@api_view(['GET'])
+def api_products_by_category(request, category_slug):
+    try:
+        category = Category.objects.get(slug=category_slug)
+    except Category.DoesNotExist:
+        return Response({'error': 'Kategori tidak ditemukan'}, status=status.HTTP_404_NOT_FOUND)
+    products = Product.objects.filter(category=category, is_available=True)
+    serializer = ProductSerializer(products, many=True)
+    return Response({'category': category.category_name, 'count': products.count(), 'results': serializer.data})
+
+
+@api_view(['GET'])
+def api_search(request):
+    query = request.GET.get('q', '').strip()
+    if not query:
+        return Response({'error': 'Parameter ?q= tidak boleh kosong'}, status=status.HTTP_400_BAD_REQUEST)
+    products = Product.objects.filter(name__icontains=query, is_available=True)
+    serializer = ProductSerializer(products, many=True)
+    return Response({'query': query, 'count': products.count(), 'results': serializer.data})
+
+
+@api_view(['GET'])
+def api_category_list(request):
+    categories = Category.objects.all()
+    serializer = CategorySerializer(categories, many=True)
+    return Response({'count': categories.count(), 'results': serializer.data})
