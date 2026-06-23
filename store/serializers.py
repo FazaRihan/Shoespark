@@ -6,7 +6,7 @@ from category.models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'category_name', 'slug']
+        fields = ['id', 'name', 'slug']
 
 
 class VariationSerializer(serializers.ModelSerializer):
