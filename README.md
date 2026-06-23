@@ -1,4 +1,4 @@
-# Django Toko Online
+# Django Toko Online Shoespark
 
 An online shop app build with Django and Bootstrap 5
 
