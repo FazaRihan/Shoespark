@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+
+        <!-- Kiri: Form Pengiriman -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h4 class="mb-4 fw-bold">Informasi Pengiriman</h4>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nama Depan</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama depan">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nama Belakang</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama belakang">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input type="email" class="form-control" placeholder="contoh@email.com"
+                               value="{{ request.user.email }}">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Nomor Telepon</label>
+                        <input type="text" class="form-control" placeholder="08xxxxxxxxxx">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Alamat Lengkap</label>
+                        <input type="text" class="form-control" placeholder="Jl. Contoh No. 123">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Kota</label>
+                        <input type="text" class="form-control" placeholder="Kota">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Kode Pos</label>
+                        <input type="text" class="form-control" placeholder="00000">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Provinsi</label>
+                        <input type="text" class="form-control" placeholder="Provinsi">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Catatan (opsional)</label>
+                        <textarea class="form-control" rows="3"
+                                  placeholder="Catatan tambahan untuk pesanan..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div class="card border-0 shadow-sm p-4">
+                <h4 class="mb-4 fw-bold">Metode Pembayaran</h4>
+                <div class="d-flex flex-column gap-3">
+                    <div class="form-check border rounded p-3">
+                        <input class="form-check-input" type="radio" name="payment"
+                               id="transfer" value="transfer" checked>
+                        <label class="form-check-label fw-semibold ms-2" for="transfer">
+                            💳 Transfer Bank
+                        </label>
+                        <p class="text-muted small ms-4 mb-0">BCA / BNI / Mandiri / BRI</p>
+                    </div>
+                    <div class="form-check border rounded p-3">
+                        <input class="form-check-input" type="radio" name="payment"
+                               id="cod" value="cod">
+                        <label class="form-check-label fw-semibold ms-2" for="cod">
+                            🚚 Bayar di Tempat (COD)
+                        </label>
+                        <p class="text-muted small ms-4 mb-0">Bayar saat barang tiba</p>
+                    </div>
+                    <div class="form-check border rounded p-3">
+                        <input class="form-check-input" type="radio" name="payment"
+                               id="ewallet" value="ewallet">
+                        <label class="form-check-label fw-semibold ms-2" for="ewallet">
+                            📱 E-Wallet
+                        </label>
+                        <p class="text-muted small ms-4 mb-0">GoPay / OVO / Dana / ShopeePay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kanan: Ringkasan Pesanan -->
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 20px;">
+                <h4 class="mb-4 fw-bold">Ringkasan Pesanan</h4>
+
+                <!-- Daftar Produk -->
+                {% for cart_item in cart_items %}
+                <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                    <img src="{{ cart_item.product.image.url }}"
+                         alt="{{ cart_item.product.name }}"
+                         class="rounded"
+                         style="width:70px; height:70px; object-fit:cover;">
+                    <div class="ms-3 flex-grow-1">
+                        <p class="mb-0 fw-semibold">{{ cart_item.product.name }}</p>
+                        {% for variation in cart_item.variations.all %}
+                            <small class="text-muted">{{ variation.variation_category|capfirst }}: {{ variation.variation_value }}</small><br>
+                        {% endfor %}
+                        <small class="text-muted">Qty: {{ cart_item.quantity }}</small>
+                    </div>
+                    <span class="fw-bold text-primary">${{ cart_item.product.price }}</span>
+                </div>
+                {% endfor %}
+
+                <!-- Total -->
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Subtotal</span>
+                        <span class="fw-semibold">${{ total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Pajak (2%)</span>
+                        <span class="fw-semibold">${{ tax }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Ongkir</span>
+                        <span class="text-success fw-semibold">Gratis</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="fw-bold fs-5">Total</span>
+                        <span class="fw-bold fs-5 text-primary">${{ grand_total }}</span>
+                    </div>
+
+                    <button class="btn btn-primary w-100 py-3 fw-bold fs-5">
+                        Konfirmasi Pesanan
+                    </button>
+                    <a href="{% url 'cart' %}"
+                       class="btn btn-outline-secondary w-100 mt-2 py-2">
+                        ← Kembali ke Keranjang
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
