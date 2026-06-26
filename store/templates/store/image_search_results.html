@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <!-- Form Upload Gambar -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 text-center">
+                <h4 class="fw-bold mb-2">🔍 Cari Sepatu dengan Foto</h4>
+                <p class="text-muted mb-4">Upload foto sepatu yang kamu inginkan, kami akan carikan produk serupa!</p>
+
+                <form method="POST" enctype="multipart/form-data" action="{% url 'image_search' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="imageUpload" class="form-label fw-semibold">Pilih Foto Sepatu</label>
+                        <input type="file" class="form-control" id="imageUpload"
+                               name="image" accept="image/*" required
+                               onchange="previewImage(this)">
+                    </div>
+
+                    <!-- Preview Gambar -->
+                    <div id="imagePreview" class="mb-3 d-none">
+                        <img id="previewImg" src="#" alt="Preview"
+                             class="img-fluid rounded shadow-sm"
+                             style="max-height: 250px; object-fit: contain;">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                        🔍 Cari Produk Serupa
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hasil Pencarian -->
+    {% if keywords %}
+    <div class="mb-4">
+        <h5 class="fw-bold">Hasil pencarian untuk:
+            {% for keyword in keywords %}
+                <span class="badge bg-primary me-1">{{ keyword }}</span>
+            {% endfor %}
+        </h5>
+        <p class="text-muted">Ditemukan {{ total_found }} produk serupa</p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Grid Produk -->
+    {% if products %}
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="{{ product.image.url }}"
+                     class="card-img-top p-3"
+                     style="height: 220px; object-fit: contain;"
+                     alt="{{ product.name }}">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold">{{ product.name|truncatechars:40 }}</h6>
+                    <p class="text-muted small">{{ product.category.category_name }}</p>
+                    <p class="fw-bold text-primary">${{ product.price }}</p>
+                    <a href="{{ product.get_url }}" class="btn btn-outline-primary btn-sm w-100">
+                        Lihat Detail
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h5 class="text-muted">Tidak ada produk serupa ditemukan</h5>
+            <p class="text-muted">Coba upload foto dengan sudut yang berbeda</p>
+            <a href="{% url 'store' %}" class="btn btn-primary">Lihat Semua Produk</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').classList.remove('d-none');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+{% endblock %}

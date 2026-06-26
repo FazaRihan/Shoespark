@@ -144,3 +144,59 @@ def api_category_list(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return Response({'count': categories.count(), 'results': serializer.data})
+
+import requests
+import base64
+from django.conf import settings
+from django.http import JsonResponse
+
+def image_search(request):
+    """Upload gambar sepatu lalu cari produk serupa"""
+    if request.method == 'POST' and request.FILES.get('image'):
+        image_file = request.FILES['image']
+        image_data = base64.b64encode(image_file.read()).decode('utf-8')
+
+        # Kirim ke Imagga API untuk mendapat tag/keyword
+        try:
+            response = requests.post(
+                'https://api.imagga.com/v2/tags',
+                auth=(settings.IMAGGA_API_KEY, settings.IMAGGA_API_SECRET),
+                data={'image_base64': image_data}
+            )
+            result = response.json()
+            tags = result.get('result', {}).get('tags', [])
+
+            # Ambil keyword teratas dari hasil Imagga
+            keywords = [tag['tag']['en'] for tag in tags[:5]]
+
+            # Cari produk di database yang cocok dengan keyword
+            from store.models import Product
+            from django.db.models import Q
+
+            products = Product.objects.none()
+            for keyword in keywords:
+                products = products | Product.objects.filter(
+                    Q(name__icontains=keyword) |
+                    Q(description__icontains=keyword) |
+                    Q(category__category_name__icontains=keyword),
+                    is_available=True
+                )
+
+            products = products.distinct()
+
+            # Kirim hasil ke template
+            context = {
+                'products': products,
+                'keywords': keywords,
+                'total_found': products.count(),
+            }
+            return render(request, 'store/image_search_results.html', context)
+
+        except Exception as e:
+            context = {
+                'error': 'Gagal memproses gambar. Coba lagi.',
+                'products': [],
+            }
+            return render(request, 'store/image_search_results.html', context)
+
+    return render(request, 'store/image_search_results.html', {})

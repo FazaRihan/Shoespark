@@ -199,3 +199,6 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
 }
+
+IMAGGA_API_KEY = config('IMAGGA_API_KEY', default='')
+IMAGGA_API_SECRET = config('IMAGGA_API_SECRET', default='')

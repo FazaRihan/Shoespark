@@ -20,5 +20,5 @@ urlpatterns = [
     path('api/products/<int:pk>/variations/', views.api_product_variations, name='api_product_variations'),
     path('api/products/category/<slug:category_slug>/', views.api_products_by_category, name='api_products_by_category'),
     path('api/categories/', views.api_category_list, name='api_category_list'),
-
+    path('image-search/', views.image_search, name='image_search'),
 ]
