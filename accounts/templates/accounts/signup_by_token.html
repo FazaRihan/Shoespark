@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="login-section">
+    <div class="login-wrapper">
+        <div class="brand-name">SHOESPARK</div>
+        <h1 class="welcome-heading">Almost There!</h1>
+        <p class="welcome-sub">Complete your Google account setup.</p>
+
+        <div class="login-card">
+            {% include 'includes/alerts.html' %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="field-group">
+                    <label class="field-label">Email Address</label>
+                    <input type="email" name="email" class="field-input"
+                           placeholder="your@email.com"
+                           value="{{ form.email.value|default:'' }}">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Username</label>
+                    <input type="text" name="username" class="field-input"
+                           placeholder="Choose a username"
+                           value="{{ form.username.value|default:'' }}">
+                </div>
+
+                <button type="submit" class="btn-signin">
+                    Complete Sign Up &nbsp;&#8594;
+                </button>
+            </form>
+
+            <p class="register-link">
+                Already have an account?&nbsp;
+                <a href="{% url 'login' %}">Sign In</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
