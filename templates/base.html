@@ -52,6 +52,213 @@ $(document).ready(function() {
     <!--Footer-->
     {% include "includes/footer.html" %}
 
+<!-- Chatbot Widget -->
+<div id="chatbot-container" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: sans-serif;
+">
+    <!-- Tombol Chat -->
+    <button id="chat-toggle" onclick="toggleChat()" style="
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #0d6efd;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+    ">
+        <span style="font-size: 24px;">💬</span>
+    </button>
+
+    <!-- Chat Box -->
+    <div id="chat-box" style="
+        display: none;
+        width: 320px;
+        height: 420px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        margin-bottom: 12px;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+    ">
+        <!-- Header -->
+        <div style="
+            background: #0d6efd;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        ">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:20px;">👟</span>
+                <div>
+                    <div style="color:white; font-weight:600; font-size:14px;">Shoespark Assistant</div>
+                    <div style="color:#cce0ff; font-size:11px;">Online</div>
+                </div>
+            </div>
+            <button onclick="toggleChat()" style="
+                background:none; border:none; color:white;
+                cursor:pointer; font-size:18px; padding:0;
+            ">✕</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages" style="
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 300px;
+        ">
+            <div style="
+                background: #f0f4ff;
+                border-radius: 12px 12px 12px 0;
+                padding: 10px 14px;
+                font-size: 13px;
+                color: #333;
+                max-width: 85%;
+            ">
+                Halo! 👋 Saya asisten Shoespark. Ada yang bisa saya bantu?
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div style="
+            padding: 12px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+        ">
+            <input id="chat-input" type="text"
+                placeholder="Ketik pesan..."
+                onkeypress="handleKey(event)"
+                style="
+                flex: 1;
+                border: 1px solid #ddd;
+                border-radius: 20px;
+                padding: 8px 14px;
+                font-size: 13px;
+                outline: none;
+            ">
+            <button onclick="sendMessage()" style="
+                background: #0d6efd;
+                border: none;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            ">
+                <span style="color:white; font-size:14px;">➤</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleChat() {
+    const box = document.getElementById('chat-box');
+    const isVisible = box.style.display === 'flex';
+    box.style.display = isVisible ? 'none' : 'flex';
+    box.style.flexDirection = 'column';
+    if (!isVisible) {
+        document.getElementById('chat-input').focus();
+    }
+}
+
+function handleKey(event) {
+    if (event.key === 'Enter') sendMessage();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const messages = document.getElementById('chat-messages');
+    const userText = input.value.trim();
+
+    if (!userText) return;
+
+    // Tampilkan pesan user
+    messages.innerHTML += `
+        <div style="
+            background: #0d6efd;
+            color: white;
+            border-radius: 12px 12px 0 12px;
+            padding: 10px 14px;
+            font-size: 13px;
+            max-width: 85%;
+            align-self: flex-end;
+            margin-left: auto;
+        ">${userText}</div>
+    `;
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Tampilkan loading
+    messages.innerHTML += `
+        <div id="typing" style="
+            background: #f0f4ff;
+            border-radius: 12px 12px 12px 0;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #999;
+            max-width: 85%;
+        ">⏳ Mengetik...</div>
+    `;
+    messages.scrollTop = messages.scrollHeight;
+
+    try {
+        const response = await fetch('/chatbot/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({message: userText})
+        });
+
+        const data = await response.json();
+
+        // Hapus loading, tampilkan respons
+        document.getElementById('typing').remove();
+        messages.innerHTML += `
+            <div style="
+                background: #f0f4ff;
+                border-radius: 12px 12px 12px 0;
+                padding: 10px 14px;
+                font-size: 13px;
+                color: #333;
+                max-width: 85%;
+            ">${data.response}</div>
+        `;
+    } catch (error) {
+        document.getElementById('typing').remove();
+        messages.innerHTML += `
+            <div style="
+                background: #ffe0e0;
+                border-radius: 12px;
+                padding: 10px 14px;
+                font-size: 13px;
+                color: #c00;
+                max-width: 85%;
+            ">Maaf, terjadi kesalahan. Coba lagi!</div>
+        `;
+    }
+
+    messages.scrollTop = messages.scrollHeight;
+}
+</script>
 
 </body>
 </html>
