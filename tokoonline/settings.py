@@ -237,3 +237,5 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
+
+DEEPSEEK_API_KEY = config('DEEPSEEK_API_KEY')
