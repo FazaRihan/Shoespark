@@ -36,7 +36,7 @@ def chatbot(request):
             )
 
             response = client.chat.completions.create(
-                model="meta-llama/llama-3.1-8b-instruct",
+                model="google/gemma-3-4b-it:free",
                 messages=[
                     {
                         "role": "system",
