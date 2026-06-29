@@ -30,14 +30,13 @@ def chatbot(request):
             if not product_list:
                 product_list = "Tidak ada produk tersedia saat ini."
 
-            # Koneksi ke DeepSeek
             client = OpenAI(
-                api_key=settings.DEEPSEEK_API_KEY,
-                base_url="https://api.deepseek.com"
+                api_key=settings.OPENROUTER_API_KEY,
+                base_url="https://openrouter.ai/api/v1"
             )
 
             response = client.chat.completions.create(
-                model="deepseek-chat",
+                model="meta-llama/llama-3.1-8b-instruct:free",
                 messages=[
                     {
                         "role": "system",
