@@ -25,7 +25,7 @@ def chatbot(request):
             products = Product.objects.filter(is_available=True)
             product_list = ""
             for p in products:
-                product_list += f"- {p.name} | Harga: Rp{p.price:,} | Kategori: {str(p.category)} | Stok: {p.stock}\n"
+                product_list += f"- {p.name} | Harga: ${p.price} | Kategori: {str(p.category)} | Stok: {p.stock}\n"
 
             if not product_list:
                 product_list = "Tidak ada produk tersedia saat ini."
@@ -47,6 +47,7 @@ Berikut adalah daftar produk yang tersedia di toko kami:
 
 Tugasmu adalah membantu pelanggan menemukan sepatu yang tepat berdasarkan daftar produk di atas.
 Jika pelanggan minta rekomendasi, rekomendasikan produk dari daftar di atas beserta harganya.
+SELALU gunakan format mata uang Dollar ($) bukan Rupiah (Rp) saat menyebutkan harga.
 Jawab dengan ramah dan singkat dalam Bahasa Indonesia."""
                     },
                     {
