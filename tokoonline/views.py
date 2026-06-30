@@ -36,7 +36,7 @@ def chatbot(request):
             )
 
             response = client.chat.completions.create(
-                model="nvidia/llama-3.1-nemotron-nano-8b-v1:free",
+                model="cohere/north-mini-code:free",
                 messages=[
                     {
                         "role": "system",
